@@ -18,9 +18,13 @@ while(True):
     # Display the resulting frame
     # cv2.imshow('frame',gray)
     # cv2.imshow('frame',color)
+    k = cv2.waitKey(1) # 0 means waits forever for a keystroke
+
     cv2.imshow('frame', frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if k & 0xFF == ord('q'):
         break
+    else:
+        print(k)
 
 # When everything done, release the capture
 cap.release()
