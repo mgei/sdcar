@@ -12,4 +12,9 @@ In general:
 * `xpra list` to see all current sessions or get the DISPLAY number
 * To end: Ctrl+c in the Terminal, don't just close the window. Else you need to `xpra stop :DISPLAY` before `xpra start ...` again
 
-To install xrpa `sudo apt install xpra`. The version we use is 0.15.8 on the computer and 0.17.? on the Raspberry. Don't build from Source and try to get a newer version - it failed. 
+To install xrpa `sudo apt install xpra`. The version we use is 0.15.8 on the computer and 0.17.? on the Raspberry. Don't build from Source and try to get a newer version - it failed.
+
+## links, other projects
+
+* interesting code with socket for video transmission https://stackoverflow.com/questions/30988033/sending-live-video-frame-over-network-in-python-opencv
+* AutoRCCar the red car seen on Youtube code https://github.com/hamuchiwa/AutoRCCar
