@@ -35,6 +35,7 @@ class Car:
         self.pwm_steer = GPIO.PWM(self.steermotor[0], 100)
         
         # potentiometer for steering delimiter
+        global spi
         spi = spidev.SpiDev()
         spi.open(0,0) 
         
@@ -75,17 +76,20 @@ class Car:
             self.pwm_steer.stop()
             
     def potentiometer(self, channel = 0):
+        if not self.initialized:
+            self.initialize()
+
         spi.max_speed_hz = 1350000
         adc = spi.xfer2([1,(8+channel)<<4,0])
         data = ((adc[1]&3) << 8) + adc[2]
         return data
         
     def limitleft(self):
-        if self.potentiometer < self.llim:
+        if self.potentiometer() < self.llim:
             return 1
         
     def limitright(self):
-        if self.potentiometer > self.rlim:
+        if self.potentiometer() > self.rlim:
             return 1
         
     def forward(self):
