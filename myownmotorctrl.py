@@ -4,6 +4,11 @@ import pygame
 from pygame.locals import *
 import sys
 
+from modules.carctrl import Car
+
+#mycar = Car(0,0,0,0)
+#mycar.move('', '')
+
 class Car:
     def __init__(self, fstate, bstate, rstate, lstate):
         self.fstate = 0

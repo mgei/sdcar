@@ -1,5 +1,13 @@
 # soon to be self-driving toy car
 
+![](img/079A9654.JPG)
+
+## testing folder
+
+All code tests that are no longer used were moved to the *testing* directory. We were experimenting with getting the keyboard input be various means: sys approach, cv2.waitKey(), and pygame (of which various approaches). Pygame turned out to be the most efficient for keyboard control as multiple keys pressed simultaniously can be recognized.
+
+Also we did tests with the webcam input and the potentiometer that is to be used for limiting the steering. For the latter, *gpiozero* was used first but replaced with more basic readout due to compability. 
+
 ## notes to myself
 
 ### connecting from computer to client using xpra
