@@ -31,10 +31,15 @@ class Car:
             print("left")
             self.lstate = 1
 
+    def go(self, f, b, r, l):
+        if
+
 pygame.display.set_caption("Empty Pygame")
 screen = pygame.display.set_mode([640,480])
 
 carryOn = 1
+
+drive = Car(0,0,0,0)
 
 while carryOn:
     for event in pygame.event.get():
@@ -47,6 +52,8 @@ while carryOn:
     key_input = pygame.key.get_pressed()
     
     if key_input[pygame.K_UP] and key_input[pygame.K_RIGHT]:
+        drive = Car(1,0,1,0)
+        drive.go()
         print("Forward Right")
     elif key_input[pygame.K_UP] and key_input[pygame.K_LEFT]:
         print("Forward Left")

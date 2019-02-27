@@ -18,3 +18,6 @@ To install xrpa `sudo apt install xpra`. The version we use is 0.15.8 on the com
 
 * interesting code with socket for video transmission https://stackoverflow.com/questions/30988033/sending-live-video-frame-over-network-in-python-opencv
 * AutoRCCar the red car seen on Youtube code https://github.com/hamuchiwa/AutoRCCar
+* for the potentiometer readout with MCP3008 we use this: https://github.com/pediehl/raspberry-pi-mcp3008
+
+
