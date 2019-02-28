@@ -12,8 +12,8 @@ class Car:
         self.drivemotor = [22, 18, 16] # enable, in1, in2
         self.steermotor = [15, 13, 11]
         
-        self.llim = 400 # default values, may be changed once instance is created
-        self.rlim = 600
+        self.llim = 370 # default values, may be changed once instance is created
+        self.rlim = 640
         
         self.initialized = False
         
@@ -41,7 +41,7 @@ class Car:
         
         self.initialized = True
         
-    def drive(self, direction, speed = 80):
+    def drive(self, direction, speed = 100):
         if not self.initialized:
             self.initialize()
         
