@@ -4,6 +4,8 @@
 
 ## Structure
 
+*drive.py* let's you control the car with the keyboard. *drive_rec.py* additionally records the drive, i.e. saves each frame as an image and also the state of the controls. This will be the imput for a neural network model.
+
 ### modules
 
 Contains the Car class that is the main part of the controls. It's job is to not sent too many inputs to the motor controller, e.g. if it's already going forward to instruct to go forward again. Only at key release the relevant motor (drive or steering) is stopped.
