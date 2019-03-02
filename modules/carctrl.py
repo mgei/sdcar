@@ -74,6 +74,7 @@ class Car:
             GPIO.output(self.steermotor[1], False)
             GPIO.output(self.steermotor[2], False)
             self.pwm_steer.stop()
+            print(self.potentiometer())
             
     def potentiometer(self, channel = 0):
         if not self.initialized:
