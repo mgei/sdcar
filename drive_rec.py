@@ -5,6 +5,7 @@ from pygame.locals import *
 import sys
 import cv2
 import numpy as np
+import csv
 
 from modules.carctrl import Car
 
@@ -27,51 +28,79 @@ toycar = Car(0,0,0,0)
 carryOn = 1
 i = 1
 
-while carryOn:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            carryOn=0
-            toycar.ignitionoff()
-            cv2.destroyAllWindows()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_x:     # press X to exit
-                carryOn = 0
-                toycar.ignitionoff()
-                cv2.destroyAllWindows()
+logfile = 'train_img/log.csv'
 
-    ret, frame = camera.read()
-
-    cv2.imwrite('train_img/img' + str(i) + '.png', frame)
-
-    screen.fill([0,0,0])
-    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    frame = np.rot90(frame)
-    frame = pygame.surfarray.make_surface(frame)
-    screen.blit(frame, (0,0))
-    pygame.display.update()
-
-    key_input = pygame.key.get_pressed()
+with open(logfile, "w", 1) as result: # last argument is buffering, 1 = line buffering
+        result.write("i; throttle; steering; potentio\n")
     
-    if key_input[pygame.K_UP] and key_input[pygame.K_RIGHT]:
-        toycar.move('f', 'r')
-    elif key_input[pygame.K_UP] and key_input[pygame.K_LEFT]:
-        toycar.move('f','l')
-    elif key_input[pygame.K_DOWN] and key_input[pygame.K_RIGHT]:
-        toycar.move('b','r')
-    elif key_input[pygame.K_DOWN] and key_input[pygame.K_LEFT]:
-        toycar.move('b','l')
-    elif key_input[pygame.K_UP]:
-        toycar.move('f', '')
-    elif key_input[pygame.K_DOWN]:
-        toycar.move('b','')
-    elif key_input[pygame.K_LEFT]:
-        toycar.move('','l')
-    elif key_input[pygame.K_RIGHT]:
-        toycar.move('','r')
-    else:
-        toycar.move('','')
+        while carryOn:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    carryOn=0
+                    toycar.ignitionoff()
+                    cv2.destroyAllWindows()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_x:     # press X to exit
+                        carryOn = 0
+                        toycar.ignitionoff()
+                        cv2.destroyAllWindows()
 
-    i += 1
+            ret, frame = camera.read()
 
-   # time.sleep(0.033)
+            cv2.imwrite('train_img/img' + str(i) + '.png', frame)
+
+            #screen.fill([0,0,0])
+            #frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            #frame = np.rot90(frame)
+            #frame = cv2.flip(frame, 0)
+            #frame = pygame.surfarray.make_surface(frame)
+            #screen.blit(frame, (0,0))
+            #pygame.display.update()
+
+            key_input = pygame.key.get_pressed()
+            
+            if key_input[pygame.K_UP] and key_input[pygame.K_RIGHT]:
+                toycar.move('f', 'r')
+                throttle = 1
+                steerinp = 1
+            elif key_input[pygame.K_UP] and key_input[pygame.K_LEFT]:
+                toycar.move('f','l')
+                throttle = 1
+                steering = -1
+            elif key_input[pygame.K_DOWN] and key_input[pygame.K_RIGHT]:
+                toycar.move('b','r')
+                throttle = -1
+                steering = 1
+            elif key_input[pygame.K_DOWN] and key_input[pygame.K_LEFT]:
+                toycar.move('b','l')
+                throttle = -1
+                steering = -1
+            elif key_input[pygame.K_UP]:
+                toycar.move('f', '')
+                throttle = 1
+                steering = 0
+            elif key_input[pygame.K_DOWN]:
+                toycar.move('b','')
+                throttle = -1
+                steering = 0
+            elif key_input[pygame.K_LEFT]:
+                toycar.move('','l')
+                throttle = 0
+                steering = -1
+            elif key_input[pygame.K_RIGHT]:
+                toycar.move('','r')
+                throttle = 0
+                steering = 1
+            else:
+                toycar.move('','')
+                throttle = 0
+                steering = 0
+
+            potentio = toycar.potentiometer()
+
+            result.write(str(i)+";"+str(throttle)+";"+str(steering)+";"+str(potentio)+"\n")
+
+            i += 1
+
+           # time.sleep(0.033)
 

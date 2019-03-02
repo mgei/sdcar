@@ -43,6 +43,7 @@ while carryOn:
     screen.fill([0,0,0])
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     frame = np.rot90(frame)
+    frame = cv2.flip(frame, 0)
     frame = pygame.surfarray.make_surface(frame)
     screen.blit(frame, (0,0))
     pygame.display.update()

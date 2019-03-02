@@ -32,10 +32,11 @@ To install xrpa `sudo apt install xpra`. The version we use is 0.15.8 on the com
 
 ## links, other projects
 
-* interesting code with socket for video transmission https://stackoverflow.com/questions/30988033/sending-live-video-frame-over-network-in-python-opencv
+* interesting code with socket for video transmission (we don't use that for the moment) https://stackoverflow.com/questions/30988033/sending-live-video-frame-over-network-in-python-opencv
 * AutoRCCar the red car seen on Youtube code https://github.com/hamuchiwa/AutoRCCar
 * for the potentiometer readout with gpiozero and MCP3008 (we no longer use that due to incompatibility with other use of the GPIO pins): https://github.com/pediehl/raspberry-pi-mcp3008
 * Potentiometer readout MCP3008 https://electronicshobbyists.com/raspberry-pi-analog-sensing-mcp3008-raspberry-pi-interfacing/
 * We use a L293D motor controller, there's a Python libray that we used first for testing https://github.com/jmsv/l293d
 * What we use to controll the motors with L293D PWM https://www.instructables.com/id/DC-Motor-Control-With-Raspberry-Pi-and-L293D/
+* OpenCV webcam video to Pygame screen https://gist.github.com/radames/1e7c794842755683162b
 
