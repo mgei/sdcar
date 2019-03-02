@@ -2,7 +2,9 @@
 
 ![](img/079A9654.JPG)
 
-## Structure
+## Raspberry
+
+This is what we use to control the car.
 
 *drive.py* let's you control the car with the keyboard. *drive_rec.py* additionally records the drive, i.e. saves each frame as an image and also the state of the controls. This will be the imput for a neural network model.
 
@@ -15,6 +17,10 @@ Contains the Car class that is the main part of the controls. It's job is to not
 All code tests that are no longer used were moved to the *testing* directory. We were experimenting with getting the keyboard input be various means: sys approach, cv2.waitKey(), and pygame (of which various approaches). Pygame turned out to be the most efficient for keyboard control as multiple keys pressed simultaniously can be recognized.
 
 Also we did tests with the webcam input and the potentiometer that is to be used for limiting the steering. For the latter, *gpiozero* was used first but replaced with more basic readout due to compability. 
+
+## Computer
+
+Training. We use a GPU but the models we plan to use are fairly simple and should also be training on CPU. 
 
 ## notes to myself
 
