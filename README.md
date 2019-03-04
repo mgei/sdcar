@@ -2,6 +2,8 @@
 
 The goal of this project is to build an self-driving toy car. We plan to apply an end-to-end approach, also known as behavioral cloning. The car should be able to steer autonomously in an environment similar to the one it would be trained on. We plan to deploy the model on the edge a Movidius compute stick.
 
+The deep learning part of this project is carried out by Citlalli Gámez Serna, a computer vision PhD, see https://github.com/citlag and https://citlag.github.io/
+
 The current state of the work is this project is:
 
 - [x] assembling the car
