@@ -28,7 +28,7 @@ toycar = Car(0,0,0,0)
 carryOn = 1
 i = 1
 
-logfile = 'train_img/log.csv'
+logfile = 'test_img/log.csv'
 
 with open(logfile, "w", 1) as result: # last argument is buffering, 1 = line buffering
         result.write("i; throttle; steering; potentio\n")
@@ -47,7 +47,7 @@ with open(logfile, "w", 1) as result: # last argument is buffering, 1 = line buf
 
             ret, frame = camera.read()
 
-            cv2.imwrite('train_img/img' + str(i) + '.png', frame)
+            cv2.imwrite('test_img/img' + str(i) + '.png', frame)
 
             #screen.fill([0,0,0])
             #frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
