@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import pygame
 import spidev
+import time
 
 class Car:   
     def __init__(self, fstate, bstate, rstate, lstate):
@@ -11,9 +12,11 @@ class Car:
         
         self.drivemotor = [22, 18, 16] # enable, in1, in2
         self.steermotor = [15, 13, 11]
-        
+        self.triggerech = [12, 7]      # trigger, echo        
+
         self.llim = 370 # default values, may be changed once instance is created
         self.rlim = 640
+        self.flim = 15 # forward limit distance in cm
         
         self.initialized = False
         
@@ -39,6 +42,10 @@ class Car:
         spi = spidev.SpiDev()
         spi.open(0,0) 
         
+        # ultrasonic
+        GPIO.setup(self.triggerech[0], GPIO.OUT)
+        GPIO.setup(self.triggerech[1], GPIO.IN)
+  
         self.initialized = True
         
     def drive(self, direction, speed = 100):
@@ -92,29 +99,69 @@ class Car:
     def limitright(self):
         if self.potentiometer() > self.rlim:
             return 1
+
+    def ultrasonic(self):
+        if not self.initialized:
+            self.initialize()
+
+        # set Trigger to HIGH
+        GPIO.output(self.triggerech[0], True)
+
+        # set Trigger after 0.01ms to LOW
+        time.sleep(0.00001)
+        GPIO.output(self.triggerech[0], False)
+
+        StartTime = time.time()
+        StopTime = time.time()
+
+        # save StartTime
+        while GPIO.input(self.triggerech[1]) == 0:
+            StartTime = time.time()
+
+        # save time of arrival
+        while GPIO.input(self.triggerech[1]) == 1:
+            StopTime = time.time()
+
+        # time difference between start and arrival
+        TimeElapsed = StopTime - StartTime
+        # multiply with the sonic speed (34300 cm/s)
+        # and divide by 2, because there and back
+        distance = (TimeElapsed * 34300) / 2
+
+        return distance
+
+    def limitforward(self):
+        if self.ultrasonic() < self.flim:
+            return 1
         
     def forward(self):
-        # check if already driving
-        if not self.fstate and not self.bstate:
-            # it's stationary, start going forward
-            print('go forward')
-            self.drive(direction = 'f')
-            self.fstate = 1
-        elif self.fstate and not self.bstate:
-            # it's already going forward, do nothing
-            pass
-        elif not self.fstate and self.bstate:
-            # it's currently going backward, stop that and go forward instead
-            print('stop go backward')
+        if self.limitforward():
+            # it in limitforward, stop driving immediately
+            print('stop go forward due to distance limit')
             self.drive(direction = '')
-            self.bstate = 0
-            print('go forward')
-            self.drive(direction = 'f')
-            self.fstate = 1
-        elif self.fstate and self.bstate:
-            # both true, should not happen
-            print('error: going forward and backward at the same time')
-            self.drive(direction = '')
+            self.fstate = 0
+        else:
+            # check if already driving
+            if not self.fstate and not self.bstate:
+                # it's stationary, start going forward
+                print('go forward')
+                self.drive(direction = 'f')
+                self.fstate = 1
+            elif self.fstate and not self.bstate:
+                # it's already going forward, do nothing
+                pass
+            elif not self.fstate and self.bstate:
+                # it's currently going backward, stop that and go forward instead
+                print('stop go backward')
+                self.drive(direction = '')
+                self.bstate = 0
+                print('go forward')
+                self.drive(direction = 'f')
+                self.fstate = 1
+            elif self.fstate and self.bstate:
+                # both true, should not happen
+                print('error: going forward and backward at the same time')
+                self.drive(direction = '')
             
     def backward(self):
         # check if already driving
