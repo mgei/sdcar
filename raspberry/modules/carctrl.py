@@ -131,9 +131,10 @@ class Car:
         return distance
 
     def limitforward(self):
-        if self.ultrasonic() < self.flim:
-            return 1
-        
+        #if self.ultrasonic() < self.flim:
+        #    return 1
+        return 0
+
     def forward(self):
         if self.limitforward():
             # it in limitforward, stop driving immediately
